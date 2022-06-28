@@ -10,15 +10,21 @@ const DropdownMenu = ({ items, isMultiSelect }) => {
     );
 
     const onOptionSelect = (id) => {
+        if (!isMultiSelect) changeAllTo(false);
+
         let newComputedItems = [...computedItems];
         newComputedItems[id].isSelected = !newComputedItems[id].isSelected;
         setComputedItems(newComputedItems);
+
+        if (!isMultiSelect) setShowDropdown(false);
     };
 
     const changeAllTo = (isSelected) => {
         let newComputedItems = [...computedItems];
         newComputedItems.map(item => item.isSelected = isSelected);
         setComputedItems(newComputedItems);
+
+        if (!isMultiSelect) setShowDropdown(false);
     }
 
     const selectedOptions = () => {
@@ -32,28 +38,37 @@ const DropdownMenu = ({ items, isMultiSelect }) => {
 
     return (
         <div className="dropdown-container">
-            <div className="selected-options" onClick={() => {setShowDropdown(!showDropdown)}}>
+            <div
+                className="selected-options"
+                title={selectedOptions().length > 0 ? selectedOptions().join(", ") : "Select an item..."}
+                onClick={() => {setShowDropdown(!showDropdown)}}
+            >
                 {selectedOptions().length > 0 ? selectedOptions().join(", ") : "Select an item..."}
             </div>
             {
                 showDropdown &&
-                <>
+                <div className="dropdown-options-container">
                     {
                         selectedOptions().length > 0 &&
-                        <div onClick={() => {changeAllTo(false)}}><i>None</i></div>
+                        <div className="dropdown-option" onClick={() => {changeAllTo(false)}}><i>None</i></div>
                     }
                     {
-                        selectedOptions().length < computedItems.length &&
-                        <div onClick={() => {changeAllTo(true)}}><i>All</i></div>
+                        isMultiSelect && selectedOptions().length < computedItems.length &&
+                        <div className="dropdown-option" onClick={() => {changeAllTo(true)}}><i>All</i></div>
                     }
                     {
                         computedItems.map(item => (
-                            <div key={item.id} onClick={() => {onOptionSelect(item.id)}}>
+                            <div
+                                className={`dropdown-option ${item.isSelected ? 'dropdown-option-selected' : ''}`}
+                                key={item.id}
+                                onClick={() => {onOptionSelect(item.id)}}
+                            >
+                                {isMultiSelect && <input type="checkbox" className="checkbox" readOnly checked={item.isSelected} />}
                                 {item.value}
                             </div>
                         ))
                     }
-                </>
+                </div>
             }
         </div>
     );

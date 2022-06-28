@@ -17,7 +17,11 @@ function App() {
 
     return (
         <div className="app">
+            <h2>Dropdown Menu Component</h2>
+            <h3>Default</h3>
             <DropdownMenu items={menuItems} />
+            <h3>With multi-select</h3>
+            <DropdownMenu items={menuItems} isMultiSelect="true" />
         </div>
     );
 }
