@@ -1,7 +1,7 @@
 import './DropdownMenu.css';
 import { useEffect, useRef, useState } from 'react';
 
-const DropdownMenu = ({ items, isMultiSelect }) => {    
+const DropdownMenu = ({ title, items, isMultiSelect }) => {    
     const [showDropdown, setShowDropdown] = useState(false);
     const [computedItems, setComputedItems] = useState(
         items.map((item, index) => {
@@ -57,6 +57,7 @@ const DropdownMenu = ({ items, isMultiSelect }) => {
 
     return (
         <div className="dropdown-container">
+            <div className="title">{title}</div>
             <div
                 ref={buttonRef}
                 className="selected-options"

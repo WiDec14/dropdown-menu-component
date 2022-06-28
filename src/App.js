@@ -19,9 +19,9 @@ function App() {
         <div className="app">
             <h2>Dropdown Menu Component</h2>
             <h3>Default</h3>
-            <DropdownMenu items={menuItems} />
+            <DropdownMenu title="Tag" items={menuItems} />
             <h3>With multi-select</h3>
-            <DropdownMenu items={menuItems} isMultiSelect="true" />
+            <DropdownMenu title="Tag" items={menuItems} isMultiSelect="true" />
         </div>
     );
 }
