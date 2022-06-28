@@ -65,6 +65,7 @@ const DropdownMenu = ({ title, items, isMultiSelect }) => {
                 onClick={() => {setShowDropdown(!showDropdown)}}
             >
                 {selectedOptions().length > 0 ? selectedOptions().join(", ") : "Select an item..."}
+                <div className={`arrow-symbol ${showDropdown ? 'arrow-symbol-reversed' : ''}`}>&#9660;</div>
             </div>
             {
                 showDropdown &&
