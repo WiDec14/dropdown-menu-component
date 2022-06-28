@@ -1,13 +1,14 @@
 import './DropdownMenu.css';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-const DropdownMenu = ({ items, isMultiSelect }) => {
+const DropdownMenu = ({ items, isMultiSelect }) => {    
     const [showDropdown, setShowDropdown] = useState(false);
     const [computedItems, setComputedItems] = useState(
         items.map((item, index) => {
             return { id: index, value: item, isSelected: false }
         })
     );
+    const buttonRef = useRef(null);
 
     const onOptionSelect = (id) => {
         if (!isMultiSelect) changeAllTo(false);
@@ -36,9 +37,28 @@ const DropdownMenu = ({ items, isMultiSelect }) => {
         }, []);
     };
 
+    const useOutsideAlerter = (ref) => {
+        useEffect(() => {
+            const handleClickOutsidePopover = (event) => {
+                if (ref.current && !ref.current.contains(event.target) && event.target !== buttonRef.current) {
+                    setShowDropdown(false);
+                }
+            }
+
+            document.addEventListener("mousedown", handleClickOutsidePopover);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutsidePopover);
+            };
+        }, [ref]);
+    };
+
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef);
+
     return (
         <div className="dropdown-container">
             <div
+                ref={buttonRef}
                 className="selected-options"
                 title={selectedOptions().length > 0 ? selectedOptions().join(", ") : "Select an item..."}
                 onClick={() => {setShowDropdown(!showDropdown)}}
@@ -47,7 +67,7 @@ const DropdownMenu = ({ items, isMultiSelect }) => {
             </div>
             {
                 showDropdown &&
-                <div className="dropdown-options-container">
+                <div ref={wrapperRef} className="dropdown-options-container">
                     {
                         selectedOptions().length > 0 &&
                         <div className="dropdown-option" onClick={() => {changeAllTo(false)}}><i>None</i></div>
