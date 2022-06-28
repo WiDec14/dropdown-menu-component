@@ -1,0 +1,12 @@
+.dropdown-container {
+    display: inline-block;
+    min-width: 250px;
+    border: 1px solid black;
+}
+
+.selected-options {
+    overflow: hidden;
+    max-width: 25ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
