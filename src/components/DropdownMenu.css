@@ -6,7 +6,7 @@
 
 .selected-options {
     overflow: hidden;
-    max-width: 25ch;
+    max-width: 250px;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
