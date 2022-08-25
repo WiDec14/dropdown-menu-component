@@ -3,6 +3,15 @@
 By William Décoste \
 <widec@me.com>
 
+## Requirements (design to reproduce)
+
+![Requirements](./screenshots/requirements.png)
+
+## Solution
+
+![Solution default](./screenshots/solution_default.png)
+![Solution multi-select](./screenshots/solution_multiselect.png)
+
 ## Available Scripts
 
 In the project directory, you can run:
